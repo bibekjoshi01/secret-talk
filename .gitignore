@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.log
+
+# Virtual environments
+venv/
+.env
+.venv/
+ENV/
+env/
+*.env
+
+/venv/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# FastAPI static/generated
+*.db
+instance/
+staticfiles/
+
+# Node (if you add tooling)
+node_modules/
+
+# Build artifacts
+dist/
+build/

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Secret Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='chat.css') }}" />
+    <script defer src="{{ url_for('static', path='chat.js') }}"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h2>Secret Chat Room: {{ chat_id }}</h2>
+    <h3>Active Users: <span id="active-users"></span></h3>
+
+    <div id="chat-container">
+      <ul id="messages"></ul>
+    </div>
+
+    <div id="input-area">
+      <input id="msg" placeholder="Type a message..." autocomplete="off" />
+      <button onclick="send()">Send</button>
+    </div>
+
+    <script>
+      const chatId = "{{ chat_id }}";
+    </script>
+  </body>
+</html>

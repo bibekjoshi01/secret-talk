@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', path='home.css') }}" />
+    <script src="{{ url_for('static', path='home.js') }}"></script>
+    <title>Secure Chat</title>
+  </head>   
+  <body>
+    <div class="container">
+      <img src={{ url_for('static', path='lock.png') }} alt="Logo" style="width:
+      200px; margin-bottom: 1rem" />
+      <h1>Your Secure Chat</h1>
+      <div class="top-row">
+        <input
+          type="text"
+          id="chatCode"
+          required
+          placeholder="Enter or generate code..."
+        />
+        <button class="btn generateCode" onclick="generateCode()">
+          Generate
+        </button>
+      </div>
+      <button class="btn full-btn" onclick="joinChat()">Join Chat Room</button>
+    </div>
+
+    <script>
+      function joinChat() {
+        const code = document.getElementById("chatCode").value.trim();
+        if (!code) {
+          alert("Please enter or generate a chat code.");
+          return;
+        }
+        window.location.href = `/chat/${code}`;
+      }
+    </script>
+  </body>
+</html>
