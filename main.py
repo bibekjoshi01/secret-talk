@@ -14,7 +14,6 @@ app = FastAPI()
 app.include_router(chat_router, tags=["chat"])
 app.add_middleware(ProxyHeadersMiddleware)
 
-WS_BASE_URL = settings.WS_BASE_URL
 
 BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
@@ -29,5 +28,5 @@ async def home_page(request: Request):
 
 @app.get("/chat/{chat_id}", response_class=HTMLResponse)
 async def chat_page(request: Request, chat_id: str):
-    context = {"request": request, "chat_id": chat_id, "ws_base_url": WS_BASE_URL}
+    context = {"request": request, "chat_id": chat_id, "ws_base_url": settings.WS_BASE_URL}
     return templates.TemplateResponse("chat.html", context=context)

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     # Application settings
     APP_NAME: str = "MyApp"
     APP_VERSION: str = "1.0.0"
-    WS_BASE_URL: str = "ws://localhost:8000/ws"
+    WS_BASE_URL: str
 
     class Config:
         env_file = ".env"  # Load environment variables from .env file
