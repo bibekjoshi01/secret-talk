@@ -5,12 +5,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.config import settings
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from app.chat import router as chat_router
 
 
 app = FastAPI()
 app.include_router(chat_router, tags=["chat"])
+app.add_middleware(ProxyHeadersMiddleware)
 
 WS_BASE_URL = settings.WS_BASE_URL
 
