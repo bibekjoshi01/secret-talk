@@ -37,3 +37,30 @@ node_modules/
 # Build artifacts
 dist/
 build/
+
+# Deployment Logs & Sockets
+*.log
+*.pid
+*.sock
+*.db
+*.sqlite3
+*.sqlite
+
+# Gunicorn Logs & Socket
+access_log
+error_log
+gunicorn.sock
+
+# Systemd service files (optional - don't ignore if managing in repo)
+*.service
+
+# Nginx (optional - only ignore if you don’t want to track config)
+*.conf
+
+# Let’s Encrypt SSL Certificates (never push certs)
+/etc/letsencrypt/
+certbot.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

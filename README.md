@@ -1,6 +1,22 @@
-# 🔐 SecretTalk – Secure, Real-Time Chat Rooms
+# 🔐 SecretTalk – Secure, Private, and Ephemeral Chat Rooms
 
-SecretTalk is a fast, lightweight, and real-time chat application built with FastAPI and WebSockets. It enables users to create or join secure chat rooms using randomly generated codes — no login, no registration.
+SecretTalk is a fast, lightweight, and privacy-first chat application built with FastAPI and WebSockets. It lets anyone instantly create or join a chat room using a unique code — no login, no registration, and no data stored.
+
+Whether you're sharing sensitive info, having a quick conversation, or hosting a private discussion, SecretTalk ensures your messages stay temporary, confidential, and secure.
 
 
-### We don't save your data.
+## 🧊 No Accounts. No History. No Tracking.
+
+    ✅ End-to-end simplicity — Just generate or enter a code and start chatting
+    🔐 Privacy-first — We don’t store any messages, usernames, or IP logs
+    🚪 Instant exit — Close the tab and you're gone, without a trace
+    🕊️ Lightweight & ephemeral — Conversations exist only while you're in the room
+
+
+## ⚠️ We Don’t Save Your Data
+
+SecretTalk is designed to feel like a private room — your messages are exchanged live and then disappear. There is:
+
+    ❌ No database
+    ❌ No cloud storage
+    ❌ No message logging
