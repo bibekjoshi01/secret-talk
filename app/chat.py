@@ -1,7 +1,7 @@
 import json
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 
-from utils import generate_random_name
+from .utils import generate_random_name
 
 router = APIRouter()
 

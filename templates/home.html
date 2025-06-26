@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{{ url_for('static', path='home.css') }}" />
-    <script src="{{ url_for('static', path='home.js') }}"></script>
+    <script defer src="{{ url_for('static', path='home.js') }}"></script>
     <title>Secure Chat</title>
   </head>   
   <body>
@@ -41,6 +41,7 @@
         }
         window.location.href = `/chat/${code}`;
       }
+      
     </script>
   </body>
 </html>

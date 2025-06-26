@@ -1,5 +1,5 @@
-const ws = new WebSocket("ws://localhost:8000/ws/chat/" + chatId);
 let assignedName = null;
+const ws = new WebSocket(WS_BASE_URL + chatId);
 
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
