@@ -28,5 +28,13 @@ async def home_page(request: Request):
 
 @app.get("/chat/{chat_id}", response_class=HTMLResponse)
 async def chat_page(request: Request, chat_id: str, name: str = Query(default=None)):
-    context = {"request": request, "chat_id": chat_id, "ws_base_url": settings.WS_BASE_URL, "username": name}
+    base_url = str(request.url).split("?")[0]
+
+    context = {
+        "request": request,
+        "chat_id": chat_id,
+        "ws_base_url": settings.WS_BASE_URL,
+        "username": name,
+        "share_url": base_url,
+    }
     return templates.TemplateResponse("chat.html", context=context)

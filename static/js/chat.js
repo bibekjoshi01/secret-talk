@@ -13,6 +13,7 @@ ws.onmessage = (event) => {
 
   if (data.type === "init") {
     assignedName = data.username;
+    document.getElementById("username").textContent = assignedName;
     return; // no need to render anything
   }
 

@@ -12,31 +12,97 @@
       rel="stylesheet"
     />
     <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
       rel="icon"
       type="image/x-icon"
       href="{{ url_for('static', path='/icons/favicon.png') }}"
     />
   </head>
   <body>
-    <h2>Secret Chat Room: {{ chat_id }}</h2>
-    <h3>Active Users: <span id="active-users"></span></h3>
-
-    <div id="chat-container">
-      <ul id="messages"></ul>
+    <!-- chat info modal -->
+    <div id="chatLinkModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeChatLinkModal()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+        <h3>Share this Chat Room Link</h3>
+        <div class="input-wrapper">
+          <input type="text" id="chat-link" readonly value="{{ share_url }}" />
+          <button class="copy-btn" onclick="copyChatLink()">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div id="input-area">
-      <input id="msg" placeholder="Type a message..." autocomplete="off" />
-      <button onclick="send()">Send</button>
+    <div class="container">
+      <div class="chat-header">
+        <div class="header-left">
+          Active Users: <span id="active-users">0</span>
+        </div>
+        <div class="header-center">
+          Hello <strong id="username">Anonymous</strong>
+        </div>
+        <div class="header-right">
+          <button id="info-button" onclick="openChatLinkModal()">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-wrapper">
+        <div id="chat-container">
+          <ul id="messages"></ul>
+        </div>
+
+        <div id="input-area">
+          <input id="msg" placeholder="Type a message..." autocomplete="off" />
+          <button id="send-btn" class="btn" onclick="send()">Send</button>
+        </div>
+      </div>
     </div>
 
+    <script>
+      function openChatLinkModal() {
+        document.getElementById("chatLinkModal").style.display = "flex";
+      }
+
+      function closeChatLinkModal() {
+        document.getElementById("chatLinkModal").style.display = "none";
+      }
+
+      function copyChatLink() {
+        const linkInput = document.getElementById("chat-link");
+        const copyBtn = document.querySelector(".copy-btn");
+        const originalValue = linkInput.value;
+
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(linkInput.value);
+        linkInput.value = "Link Copied To Clipboard!";
+        copyBtn.style.display = "none";
+        setTimeout(() => {
+          linkInput.value = originalValue;
+          copyBtn.style.display = "inline-block";
+        }, 2000);
+      }
+    </script>
     <script>
       window.chatConfig = {
         chatId: "{{ chat_id }}",
         wsBaseUrl: "{{ ws_base_url }}",
         username: "{{ username or '' }}",
       };
-      console.log(window.chatConfig, "window.chatConfig");
     </script>
     <script defer src="{{ url_for('static', path='/js/chat.js') }}"></script>
   </body>
