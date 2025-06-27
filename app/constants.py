@@ -18,7 +18,16 @@ user_names = [
     "Feyrixa",
     "Braldun",
     "Nirvra",
-    "Tarnyx"
+    "Tarnyx",
+    "Voodoo",
+    "Twilight",
+    "Panda",
+    "Espresso",
+    "Licorice",
+    "Twizzler",
+    "Velvet",
+    "Sushi",
+    "Stunner",
 ]
 
 

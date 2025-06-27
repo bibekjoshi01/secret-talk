@@ -14,7 +14,7 @@ ws.onmessage = (event) => {
   if (data.type === "init") {
     assignedName = data.username;
     document.getElementById("username").textContent = assignedName;
-    return; // no need to render anything
+    return;
   }
 
   if (data.type === "user_list") {
@@ -25,15 +25,21 @@ ws.onmessage = (event) => {
 
   if (data.type === "system") {
     li.classList.add("system");
-    li.textContent = data.message;
+    li.innerHTML = `
+    <div class="message-body">${data.message} ${data?.timestamp}</div>`;
   }
 
   if (data.type === "chat") {
     const isSelf = data.sender === assignedName;
     li.classList.add(isSelf ? "self" : "other");
-    li.innerHTML = `<strong>${isSelf ? "You" : data.sender}:</strong> ${
-      data.message
-    }`;
+    const safeSender = escapeHTML(isSelf ? "You" : data.sender);
+    const safeMessage = escapeHTML(data.message);
+    li.innerHTML = `
+  <div class="message-header">
+    <strong>${safeSender}</strong>
+    <div class="message-body">${safeMessage}</div>
+  </div>
+  <span class="timestamp">${data.timestamp}</span>`;
   }
 
   document.getElementById("messages").appendChild(li);
@@ -54,4 +60,13 @@ function send() {
     ws.send(message);
     input.value = "";
   }
+}
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

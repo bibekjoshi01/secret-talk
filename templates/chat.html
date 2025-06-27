@@ -67,10 +67,37 @@
 
         <div id="input-area">
           <input id="msg" placeholder="Type a message..." autocomplete="off" />
-          <button id="send-btn" class="btn" onclick="send()">Send</button>
+          <input
+            type="file"
+            id="attachmentInput"
+            style="display: none"
+            multiple
+          />
+          <button
+            class="btn attachment"
+            onclick="document.getElementById('attachmentInput').click()"
+          >
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+          </button>
+          <button id="send-btn" class="btn send" onclick="send()">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </div>
+
+    <script>
+      const attachmentInput = document.getElementById("attachmentInput");
+
+      attachmentInput.addEventListener("change", () => {
+        const files = attachmentInput.files;
+        if (files.length > 0) {
+          console.log("Selected files:", files);
+          // 🚨 TODO: upload or send the files here
+          Array.from(files).forEach((file) => console.log(file.name));
+        }
+      });
+    </script>
 
     <script>
       function openChatLinkModal() {

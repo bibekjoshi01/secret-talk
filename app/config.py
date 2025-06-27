@@ -8,8 +8,8 @@ class Settings(BaseSettings):
     Application settings using Pydantic for configuration management.
     """
     # Application settings
-    APP_NAME: str = "MyApp"
-    APP_VERSION: str = "1.0.0"
+    APP_NAME: str = "Secure Talk"
+    APP_VERSION: str = "1.1.0"
     WS_BASE_URL: str
 
     class Config:

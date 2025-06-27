@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Query
 
 from .utils import generate_random_name
@@ -23,11 +24,8 @@ async def broadcast(chat_id: str, message: dict):
 
 
 async def send_user_list(chat_id):
-    members = [user['username'] for user in chat_rooms[chat_id]]
-    msg = {
-        "type": "user_list",
-        "members": len(members)
-    }
+    members = [user["username"] for user in chat_rooms[chat_id]]
+    msg = {"type": "user_list", "members": len(members)}
     await broadcast(chat_id, msg)
 
 
@@ -49,16 +47,14 @@ async def chat(websocket: WebSocket, chat_id: str, name: str = Query(default=Non
     # Add user to room
     chat_rooms[chat_id].append({"socket": websocket, "username": username})
 
-    await websocket.send_text(json.dumps({
-        "type": "init",
-        "username": username
-    }))
+    await websocket.send_text(json.dumps({"type": "init", "username": username}))
 
     # Notify others about new user
     join_message = {
         "sender": "System",
         "message": f"{username} joined the chat.",
         "type": "system",
+        "timestamp": datetime.now().strftime("%H:%M"),
     }
 
     await broadcast(chat_id, join_message)
@@ -67,7 +63,12 @@ async def chat(websocket: WebSocket, chat_id: str, name: str = Query(default=Non
     try:
         while True:
             data = await websocket.receive_text()
-            message_data = {"sender": username, "message": data, "type": "chat"}
+            message_data = {
+                "sender": username,
+                "message": data,
+                "type": "chat",
+                "timestamp": datetime.now().strftime("%H:%M"),
+            }
             await broadcast(chat_id, message_data)
 
     except WebSocketDisconnect:
@@ -75,9 +76,16 @@ async def chat(websocket: WebSocket, chat_id: str, name: str = Query(default=Non
         chat_rooms[chat_id] = [
             user for user in chat_rooms[chat_id] if user["socket"] != websocket
         ]
-        leave_message = {
-            "sender": "System",
-            "message": f"{username} left the chat.",
-            "type": "system",
-        }
-        await broadcast(chat_id, leave_message)
+
+        # Delete room if empty
+        if not chat_rooms[chat_id]:
+            del chat_rooms[chat_id]
+        else:
+            leave_message = {
+                "sender": "System",
+                "message": f"{username} left the chat.",
+                "type": "system",
+                "timestamp": datetime.now().strftime("%H:%M"),
+            }
+            await broadcast(chat_id, leave_message)
+            await send_user_list(chat_id)

@@ -58,7 +58,7 @@ body {
   background: transparent;
   border: none;
   font-size: 1.2rem;
-  color: #cbd5e1;
+  color: var(--color-text-main);
   cursor: pointer;
   transition: color 0.3s;
 }
@@ -106,7 +106,7 @@ body {
 }
 
 .self {
-  background-color: var(--color-accent);
+  background-color: var(--color-background-green);
   color: white;
   align-self: flex-end;
   text-align: right;
@@ -140,9 +140,9 @@ body {
 
 #msg {
   flex: 1;
-  padding: 0.7rem;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 30px;
+  padding: 10px 20px;
   border: none;
   background-color: var(--color-secondary-bg);
   color: white;
@@ -168,6 +168,32 @@ body {
 
 .btn:hover {
   background-color: var(--color-accent-hover);
+}
+
+.btn.send {
+  width: 48px;
+  height: 48px;
+  padding: 0; 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn.attachment {
+  width: 48px;
+  height: 48px;
+  padding: 0; 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-secondary-bg);
+}
+
+.timestamp {
+  color: var(--color-text-secondary);
+  font-style: italic;
 }
 
 /* chat modal style */
