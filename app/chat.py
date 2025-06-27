@@ -1,5 +1,5 @@
 import json
-from fastapi import WebSocket, WebSocketDisconnect, APIRouter
+from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Query
 
 from .utils import generate_random_name
 
@@ -32,7 +32,7 @@ async def send_user_list(chat_id):
 
 
 @router.websocket("/ws/chat/{chat_id}")
-async def chat(websocket: WebSocket, chat_id: str):
+async def chat(websocket: WebSocket, chat_id: str, name: str = Query(default=None)):
     await websocket.accept()
 
     # Initialize room if not present
@@ -42,7 +42,7 @@ async def chat(websocket: WebSocket, chat_id: str):
     # Generate unique username
     existing_names = {user["username"] for user in chat_rooms[chat_id]}
     while True:
-        username = generate_random_name()
+        username = name or generate_random_name()
         if username not in existing_names:
             break
 

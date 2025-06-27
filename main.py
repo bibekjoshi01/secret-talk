@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -27,6 +27,6 @@ async def home_page(request: Request):
 
 
 @app.get("/chat/{chat_id}", response_class=HTMLResponse)
-async def chat_page(request: Request, chat_id: str):
-    context = {"request": request, "chat_id": chat_id, "ws_base_url": settings.WS_BASE_URL}
+async def chat_page(request: Request, chat_id: str, name: str = Query(default=None)):
+    context = {"request": request, "chat_id": chat_id, "ws_base_url": settings.WS_BASE_URL, "username": name}
     return templates.TemplateResponse("chat.html", context=context)

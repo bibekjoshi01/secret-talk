@@ -3,11 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Secret Chat</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/chat.css') }}" />
-    <script defer src="{{ url_for('static', path='/js/chat.js') }}"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', path='/css/chat.css') }}"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='/icons/favicon.png') }}"
     />
   </head>
   <body>
@@ -24,8 +31,13 @@
     </div>
 
     <script>
-      const chatId = "{{ chat_id }}";
-      const WS_BASE_URL = "{{ ws_base_url }}";
+      window.chatConfig = {
+        chatId: "{{ chat_id }}",
+        wsBaseUrl: "{{ ws_base_url }}",
+        username: "{{ username or '' }}",
+      };
+      console.log(window.chatConfig, "window.chatConfig");
     </script>
+    <script defer src="{{ url_for('static', path='/js/chat.js') }}"></script>
   </body>
 </html>

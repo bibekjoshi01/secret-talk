@@ -9,39 +9,78 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/home.css') }}" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', path='css/home.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/icons/favicon.png') }}">
+
     <script defer src="{{ url_for('static', path='/js/home.js') }}"></script>
     <title>Secure Chat</title>
-  </head>   
+  </head>
   <body>
     <div class="container">
-      <img src={{ url_for('static', path='icons/lock.png') }} alt="Logo" style="width:
-      200px; margin-bottom: 1rem" />
-      <h1>Your Secure Chat</h1>
-      <div class="top-row">
-        <input
-          type="text"
-          id="chatCode"
-          required
-          placeholder="Enter or generate code..."
-        />
-        <button class="btn generateCode" onclick="generateCode()">
-          Generate
+      <div class="left">
+        <div class="top-row">
+          <h1 class="title">Talk Freely, Share Privately</h1>
+          <p class="description">
+            Connect, collaborate, and share secrets — with no traces left
+            behind.
+          </p>
+        </div>
+        <div class="middle-row input-with-icon">
+          <span class="input-icon">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+          <input
+            type="text"
+            id="chatCode"
+            required
+            placeholder="Enter or generate code..."
+          />
+          <button class="btn generateCode" onclick="generateCode()">
+            Generate
+          </button>
+        </div>
+        <button class="btn full-btn" onclick="joinChat()">
+          Join Chat Room
         </button>
       </div>
-      <button class="btn full-btn" onclick="joinChat()">Join Chat Room</button>
+      <div class="right">
+        <img src={{ url_for('static', path='icons/lock.png') }} alt="Logo"
+        style="width: 400px; margin-bottom: 1rem" />
+      </div>
+    </div>
+
+    <!-- Modal Background -->
+    <div id="nicknameModal" class="modal">
+      <div class="modal-content">
+        <input
+          type="text"
+          id="nickname"
+          class="modal-input"
+          placeholder="Enter your nickname"
+        />
+
+        <button
+          id="continueBtn"
+          class="btn full-btn primary" 
+          onclick="proceedToChat()"
+        >
+          Continue without name
+        </button>
+      </div>
     </div>
 
     <script>
-      function joinChat() {
-        const code = document.getElementById("chatCode").value.trim();
-        if (!code) {
-          alert("Please enter or generate a chat code.");
-          return;
-        }
-        window.location.href = `/chat/${code}`;
-      }
-      
+      let chatCode = "";
     </script>
   </body>
 </html>

@@ -1,5 +1,11 @@
 let assignedName = null;
-const ws = new WebSocket(WS_BASE_URL + chatId);
+const { chatId, wsBaseUrl, username } = window.chatConfig;
+
+const wsUrl = `${wsBaseUrl}${chatId}${
+  username ? `?name=${encodeURIComponent(username)}` : ""
+}`;
+
+const ws = new WebSocket(wsUrl);
 
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
@@ -24,7 +30,9 @@ ws.onmessage = (event) => {
   if (data.type === "chat") {
     const isSelf = data.sender === assignedName;
     li.classList.add(isSelf ? "self" : "other");
-    li.innerHTML = `<strong>${isSelf ? "You" : data.sender}:</strong> ${data.message}`;
+    li.innerHTML = `<strong>${isSelf ? "You" : data.sender}:</strong> ${
+      data.message
+    }`;
   }
 
   document.getElementById("messages").appendChild(li);
@@ -34,7 +42,7 @@ ws.onmessage = (event) => {
 document.getElementById("msg").addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     e.preventDefault();
-    send(); 
+    send();
   }
 });
 
