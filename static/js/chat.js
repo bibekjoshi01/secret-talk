@@ -60,7 +60,7 @@ ws.onmessage = (event) => {
       li.innerHTML = `
       <div class="message-header">
         <strong>${safeSender}</strong>
-        <div class="message-body">${JSON.stringify(safeMessage)}</div>
+        <div class="message-body">${escapeHTML(safeMessage)}</div>
       </div>
       <span class="timestamp">${data.timestamp}</span>`;
     }
