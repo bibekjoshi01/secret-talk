@@ -9,7 +9,6 @@ const ws = new WebSocket(wsUrl);
 
 ws.onmessage = (event) => {
   const data = JSON.parse(event.data);
-  const li = document.createElement("li");
   const chatContainer = document.getElementById("chat-container");
 
   if (data.type === "init") {
@@ -18,11 +17,26 @@ ws.onmessage = (event) => {
     return;
   }
 
+  if (data.type === "typing") {
+    const typingIndicator = document.getElementById("typing-indicator");
+    typingIndicator.textContent = `${escapeHTML(data.username)} is typing...`;
+    typingIndicator.style.display = "block";
+    return;
+  }
+
+  if (data.type === "stop_typing") {
+    const typingIndicator = document.getElementById("typing-indicator");
+    typingIndicator.style.display = "none";
+    return;
+  }
+
   if (data.type === "user_list") {
     const activeUsers = document.getElementById("active-users");
     activeUsers.textContent = data.members;
     return;
   }
+
+  const li = document.createElement("li");
 
   if (data.type === "system") {
     li.classList.add("system");
@@ -35,12 +49,21 @@ ws.onmessage = (event) => {
     li.classList.add(isSelf ? "self" : "other");
     const safeSender = escapeHTML(isSelf ? "You" : data.sender);
     const safeMessage = escapeHTML(data.message);
-    li.innerHTML = `
-  <div class="message-header">
-    <strong>${safeSender}</strong>
-    <div class="message-body">${safeMessage}</div>
-  </div>
-  <span class="timestamp">${data.timestamp}</span>`;
+
+    if (isOnlyEmoji(safeMessage)) {
+      // Show big emoji only, no sender or time
+      li.classList.add(isSelf ? "self-emoji" : "other-emoji");
+      li.classList.add("emoji-only")
+      li.innerHTML = `<div class="emoji-only">${safeMessage}</div>`;
+    } else {
+      li.classList.add(isSelf ? "self" : "other");
+      li.innerHTML = `
+      <div class="message-header">
+        <strong>${safeSender}</strong>
+        <div class="message-body">${escapeHTML(safeMessage)}</div>
+      </div>
+      <span class="timestamp">${data.timestamp}</span>`;
+    }
   }
 
   if (data.type === "audio") {
@@ -244,6 +267,11 @@ function send() {
       message = escapeHTML(message);
       ws.send(
         JSON.stringify({
+          type: "stop_typing",
+        })
+      );
+      ws.send(
+        JSON.stringify({
           type: "text",
           data: message,
         })
@@ -251,4 +279,12 @@ function send() {
       input.value = "";
     }
   }
+}
+
+function isOnlyEmoji(str) {
+  // Unicode emoji regex that roughly matches emoji characters only
+  // This regex matches one or more emoji characters and nothing else (no spaces, letters, numbers)
+  const emojiRegex =
+    /^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji_Modifier_Base}|\p{Emoji_Component})+$/u;
+  return emojiRegex.test(str);
 }

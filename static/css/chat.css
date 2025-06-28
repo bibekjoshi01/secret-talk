@@ -50,6 +50,7 @@ body {
   border-bottom: 2px solid var(--color-border);
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
+  position: relative;
 }
 
 .header-center {
@@ -353,4 +354,36 @@ body {
 
 #recording-time {
   margin-right: 2px;
+}
+
+/* typing indicator */
+
+#typing-indicator {
+  position: sticky;
+  bottom: 0;
+  display: none;
+  color: var(--color-system-msg);
+  margin-top: 10px;
+  font-style: italic;
+  text-align: center;
+  padding: 4px 0;
+  z-index: 1;
+}
+
+.emoji-only {
+  font-size: 3rem; /* bigger emoji */
+  text-align: center;
+  line-height: 1;
+  background-color: transparent !important; /* override any bg */
+  box-shadow: none !important; /* remove shadow */
+  padding: 0; /* optional: remove padding for cleaner look */
+  max-width: none; /* let emoji be centered without width limits */
+}
+
+.self-emoji {
+  text-align: right;
+}
+
+.other-emoji {
+  text-align: left;
 }

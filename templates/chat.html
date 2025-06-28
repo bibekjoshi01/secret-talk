@@ -64,6 +64,7 @@
       <div class="chat-wrapper">
         <div id="chat-container">
           <ul id="messages"></ul>
+          <div id="typing-indicator"></div>
         </div>
 
         <div id="input-area">
@@ -95,7 +96,12 @@
           >
             <i class="fa fa-paperclip" aria-hidden="true"></i>
           </button>
-          <input id="msg" placeholder="Type a message..." autocomplete="off" />
+          <input
+            id="msg"
+            data-emojiable="true"
+            placeholder="Type a message..."
+            autocomplete="off"
+          />
           <input
             type="file"
             id="attachmentInput"
@@ -110,6 +116,26 @@
         </div>
       </div>
     </div>
+    <!-- Typing indicator -->
+    <script>
+      const msgInput = document.getElementById("msg");
+      let typingTimeout;
+
+      msgInput.addEventListener("input", () => {
+        if (msgInput.value.trim() !== "") {
+          ws.send(
+            JSON.stringify({
+              type: "typing",
+            })
+          );
+          clearTimeout(typingTimeout);
+          typingTimeout = setTimeout(() => {
+            ws.send(JSON.stringify({ type: "stop_typing" }));
+          }, 2000);
+        }
+      });
+    </script>
+    <!-- Attachment sending -->
     <script>
       const attachmentInput = document.getElementById("attachmentInput");
 
