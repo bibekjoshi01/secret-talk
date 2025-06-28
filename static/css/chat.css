@@ -12,6 +12,8 @@
   --color-border: #334155;
   --color-overlay: rgba(15, 23, 42, 0.8);
   --color-system-msg: #94a3b8;
+  --color-cancel-btn: #f87171;
+  --color-cancel-btn-hover: #ef4444;
 }
 
 /* Root styling */
@@ -173,7 +175,7 @@ body {
 .btn.send {
   width: 48px;
   height: 48px;
-  padding: 0; 
+  padding: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -183,7 +185,7 @@ body {
 .btn.attachment {
   width: 48px;
   height: 48px;
-  padding: 0; 
+  padding: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -282,4 +284,73 @@ body {
 
 .copy-btn:hover {
   color: var(--color-accent);
+}
+
+/* Recording */
+/* ----------------------- */
+
+.recording-indicator {
+  display: none; /* hidden by default */
+  width: 100%;
+  background-color: var(--color-primary-bg);
+  color: white;
+  border-radius: 30px;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  gap: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-cancel-btn);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.cancel-btn:hover {
+  color: var(--color-cancel-btn-hover);
+}
+
+.recording-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.red-dot {
+  color: var(--color-cancel-btn-hover);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.timer-box {
+  background-color: var(--color-secondary-bg);
+  border-radius: 10px;
+  padding: 0.3rem 0.6rem;
+  font-weight: bold;
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+#recording-time {
+  margin-right: 2px;
 }

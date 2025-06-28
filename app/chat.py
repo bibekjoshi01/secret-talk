@@ -1,4 +1,5 @@
 import json
+import base64
 from datetime import datetime
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Query
 
@@ -63,12 +64,33 @@ async def chat(websocket: WebSocket, chat_id: str, name: str = Query(default=Non
     try:
         while True:
             data = await websocket.receive_text()
-            message_data = {
-                "sender": username,
-                "message": data,
-                "type": "chat",
-                "timestamp": datetime.now().strftime("%H:%M"),
-            }
+            data = json.loads(data)
+            if data["type"] == "audio":
+                audio_bytes = base64.b64decode(data["data"])
+                audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
+                message_data = {
+                    "sender": username,
+                    "message": audio_base64,
+                    "type": "audio",
+                    "timestamp": datetime.now().strftime("%H:%M"),
+                }
+            elif data["type"] == "text":
+                message_data = {
+                    "sender": username,
+                    "message": data["data"],
+                    "type": "chat",
+                    "timestamp": datetime.now().strftime("%H:%M"),
+                }
+            elif data["type"] == "image":
+                image_bytes = base64.b64decode(data["data"])
+                image_data = base64.b64encode(image_bytes).decode("utf-8")
+                message_data = {
+                    "sender": username,
+                    "message": image_data,
+                    "type": "image",
+                    "timestamp": datetime.now().strftime("%H:%M"),
+                }
+
             await broadcast(chat_id, message_data)
 
     except WebSocketDisconnect:

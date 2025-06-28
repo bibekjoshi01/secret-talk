@@ -60,41 +60,86 @@
         </div>
       </div>
 
+      <!-- chat section -->
       <div class="chat-wrapper">
         <div id="chat-container">
           <ul id="messages"></ul>
         </div>
 
         <div id="input-area">
+          <div
+            id="recording-indicator"
+            style="display: none"
+            class="recording-indicator"
+          >
+            <button
+              id="cancel-recording"
+              class="cancel-btn"
+              onclick="cancelRecording()"
+            >
+              <i class="fa fa-times"></i>
+            </button>
+            <div class="recording-content">
+              <i class="fa fa-circle red-dot"></i>
+              <span>Recording...</span>
+            </div>
+            <div class="timer-box"><span id="recording-time">0</span>s</div>
+          </div>
+          <button id="record-btn" class="btn send" onclick="startRecording()">
+            <i class="fa fa-microphone"></i>
+          </button>
+          <button
+            id="attachment"
+            class="btn attachment"
+            onclick="document.getElementById('attachmentInput').click()"
+          >
+            <i class="fa fa-paperclip" aria-hidden="true"></i>
+          </button>
           <input id="msg" placeholder="Type a message..." autocomplete="off" />
           <input
             type="file"
             id="attachmentInput"
             style="display: none"
             multiple
+            accept="image/*"
           />
-          <button
-            class="btn attachment"
-            onclick="document.getElementById('attachmentInput').click()"
-          >
-            <i class="fa fa-paperclip" aria-hidden="true"></i>
-          </button>
+
           <button id="send-btn" class="btn send" onclick="send()">
             <i class="fa fa-paper-plane" aria-hidden="true"></i>
           </button>
         </div>
       </div>
     </div>
-
     <script>
       const attachmentInput = document.getElementById("attachmentInput");
 
       attachmentInput.addEventListener("change", () => {
         const files = attachmentInput.files;
         if (files.length > 0) {
-          console.log("Selected files:", files);
-          // 🚨 TODO: upload or send the files here
-          Array.from(files).forEach((file) => console.log(file.name));
+          Array.from(files).forEach((file) => {
+            // Only allow images
+            if (!file.type.startsWith("image/")) {
+              console.warn(`${file.name} is not an image, skipping.`);
+              return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+              const base64Data = reader.result.split(",")[1]; // get base64 only
+              ws.send(
+                JSON.stringify({
+                  type: "image",
+                  filename: file.name,
+                  data: base64Data,
+                })
+              );
+              console.log(`Sent image: ${file.name}`);
+            };
+            reader.readAsDataURL(file);
+          });
+
+          // Clear the input after sending
+          attachmentInput.value = "";
         }
       });
     </script>
