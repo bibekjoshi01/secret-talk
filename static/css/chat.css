@@ -407,7 +407,7 @@ body {
     font-size: 1.5rem;
   }
 
-  .btn.attachment .btn.send {
+  .btn.attachment, .btn.send {
     width: 50px;
     height: 50px;
   }
