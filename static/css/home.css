@@ -166,3 +166,57 @@ input[type="text"] {
 .modal-input[type="text"] {
   padding-left: 0.7rem !important;
 }
+
+/* SmartPhones*/
+
+@media (max-width: 420px) {
+  body {
+    height: auto;
+  }
+  .container {
+    margin: auto;
+    width: fit-content;
+    max-width: 100%;
+    /* height: max-content; */
+    flex-direction: column;
+    box-sizing: border-box;
+    align-self: center;
+  }
+
+  .container > div {
+    box-sizing: border-box;
+  }
+
+  .middle-row {
+    flex-direction: column;
+  }
+
+  input[type="text"] {
+    max-width: 310px;
+    width: 100%;
+  }
+
+  .input-with-icon .input-icon {
+    top: 0.7rem;
+    /* left: 1rem; */
+  }
+
+  .container > div {
+    max-width: fit-content;
+  }
+
+  .btn.generateCode {
+    width: 100%;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* max-height: 100%; */
+  }
+
+  .description {
+    margin-top: 0px;
+    margin-bottom: 0;
+  }
+}
