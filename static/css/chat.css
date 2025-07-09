@@ -389,43 +389,48 @@ body {
 }
 
 @media (max-width: 420px) {
-  .container {
-    width: 100%;
-    font-size: 1.5rem;
-  }
-
-  .header-right button {
-    font-size: 1.8rem;
-  }
-
-  #chat-container {
+  body {
+    max-width: 100%;
     box-sizing: border-box;
-    height: 80vh;
+    padding: auto 10px;
+  }
+  .container {
+    max-width: fit-content;
   }
 
-  .btn {
-    font-size: 1.5rem;
+  #msg {
+    width: 120px;
   }
 
+  .chat-header {
+    width: 100%;
+    /* padding: 1rem; */
+  }
+
+  #messages li {
+    /* min-width: 25%; */
+    width: fit-content;
+    max-width: 50%;
+  }
+
+  audio,img, video {
+    max-width: 100% !important;
+  }
+  
   .btn.attachment, .btn.send {
     width: 50px;
     height: 50px;
   }
 
-  #msg,
-  .cancel-btn,
-  .copy-btn,
-  .close-btn {
-    font-size: 1.6rem;
+
+  .chat-header{
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    align-items: center;
   }
 
-  .recording-content,
-  .timer-box {
-    font-size: 1.2rem;
-  }
-
-  .modal-content h3,
-  .input-wrapper input {
-    font-size: 1.4rem;
+  .btn.send, .btn.attachment{
+    width: 52px;
+    height: 52px;
   }
 }
