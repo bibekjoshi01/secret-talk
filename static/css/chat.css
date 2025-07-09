@@ -416,6 +416,11 @@ body {
   audio,img, video {
     max-width: 100% !important;
   }
+  
+  .btn.attachment, .btn.send {
+    width: 50px;
+    height: 50px;
+  }
 
 
   .chat-header{

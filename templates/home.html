@@ -20,7 +20,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='/icons/favicon.png') }}">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', path='/icons/favicon.png') }}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script defer src="{{ url_for('static', path='/js/home.js') }}"></script>
     <title>Secure Chat</title>
@@ -71,7 +76,7 @@
 
         <button
           id="continueBtn"
-          class="btn full-btn primary" 
+          class="btn full-btn primary"
           onclick="proceedToChat()"
         >
           Continue without name
